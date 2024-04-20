@@ -1,0 +1,20 @@
+# Arquivos gerados pelo TypeScript
+/dist/
+
+# Dependências do Node.js
+/node_modules/
+
+# Arquivos de compilação do TypeScript
+*.js
+*.js.map
+
+# Arquivos temporários
+*.log
+*.swp
+*.swo
+
+# Arquivos de ambiente
+.env
+
+# Arquivos de configuração do editor
+.vscode/

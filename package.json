@@ -1,0 +1,22 @@
+{
+  "name": "postagem",
+  "version": "1.0.0",
+  "description": "Projeto para uma vaga de desenvolvedor fullstack junior",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec ts-node ./src/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.7",
+    "express": "^4.19.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
