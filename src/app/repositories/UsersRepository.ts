@@ -24,6 +24,14 @@ class UserRepository {
     const row = await query('SELECT id,nome,email FROM Users;', []);
     return row;
   }
+
+  async findByEmail(email: string) {
+    const [row] = await query(
+      'SELECT id, nome, email FROM Users WHERE email = $1',
+      [email],
+    );
+    return row;
+  }
 }
 
 export default new UserRepository();

@@ -24,6 +24,14 @@ class UserController {
       this.sendErrorRequest(response, 400, 'senha');
     }
 
+    const userAlredyExists = await UserRepository.findByEmail(email);
+
+    if (userAlredyExists) {
+      return response.status(400).json({
+        error: 'This email has already been used',
+      });
+    }
+
     const resultRequest = await UserRepository.create(
       nome,
       email,
