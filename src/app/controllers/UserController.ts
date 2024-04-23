@@ -31,6 +31,25 @@ class UserController {
     );
     response.send(resultRequest);
   }
+
+  async show(request: Request, response: Response) {
+    const { id } = request.params;
+    try {
+      const resultRequest = await UserRepository.findById(id);
+
+      if (!resultRequest) {
+        response.status(400).json({
+          message: 'User not found',
+        });
+      }
+
+      response.send(resultRequest);
+    } catch (error) {
+      response.status(400).json({
+        error: 'Used ID is not UUID type',
+      });
+    }
+  }
 }
 
 export default new UserController();

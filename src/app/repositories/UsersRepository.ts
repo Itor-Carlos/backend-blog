@@ -11,6 +11,14 @@ class UserRepository {
     );
     return row;
   }
+
+  async findById(id: string) {
+    const [row] = await query(
+      'SELECT nome, email, data_criacao FROM Users WHERE id = $1',
+      [id],
+    );
+    return row;
+  }
 }
 
 export default new UserRepository();
