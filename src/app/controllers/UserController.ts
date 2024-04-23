@@ -63,6 +63,26 @@ class UserController {
     const requestResult = await UserRepository.listAll();
     response.send(requestResult);
   }
+
+  async remove(request: Request, response: Response) {
+    try {
+      const { id } = request.params;
+
+      const userAlredyExists = await UserRepository.findById(id);
+
+      if (!userAlredyExists) {
+        return response.status(404).json({
+          error: 'User not found',
+        });
+      }
+
+      response.sendStatus(200);
+    } catch (error) {
+      response.status(400).json({
+        error: 'Used ID is not UUID type',
+      });
+    }
+  }
 }
 
 export default new UserController();

@@ -32,6 +32,9 @@ class UserRepository {
     );
     return row;
   }
+  async delete(id: string) {
+    await query('DELETE FROM Users WHERE id = $1', [id]);
+  }
 }
 
 export default new UserRepository();
