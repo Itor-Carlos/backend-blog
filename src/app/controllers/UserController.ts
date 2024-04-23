@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import UserRepository from '../repositories/UsersRepository';
+import { criptografar } from '../utils/criptografia';
 
 class UserController {
   sendErrorRequest(response: Response, statusCode: number, field: string) {
@@ -23,7 +24,11 @@ class UserController {
       this.sendErrorRequest(response, 400, 'senha');
     }
 
-    const resultRequest = await UserRepository.create(nome, email, senha);
+    const resultRequest = await UserRepository.create(
+      nome,
+      email,
+      criptografar(senha),
+    );
     response.send(resultRequest);
   }
 }
