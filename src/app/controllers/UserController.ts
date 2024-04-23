@@ -50,6 +50,11 @@ class UserController {
       });
     }
   }
+
+  async index(request: Request, response: Response) {
+    const requestResult = await UserRepository.listAll();
+    response.send(requestResult);
+  }
 }
 
 export default new UserController();

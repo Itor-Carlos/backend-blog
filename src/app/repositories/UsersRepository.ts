@@ -19,6 +19,11 @@ class UserRepository {
     );
     return row;
   }
+
+  async listAll() {
+    const row = await query('SELECT id,nome,email FROM Users;', []);
+    return row;
+  }
 }
 
 export default new UserRepository();
