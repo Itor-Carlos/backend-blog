@@ -5,7 +5,7 @@ class UserRepository {
     const [row] = await query(
       `INSERT INTO users (nome, email, senha)
     VALUES ($1, $2, $3)
-    RETURNING nome,email,senha
+    RETURNING id,nome,email
     `,
       [nome, email, senha],
     );
