@@ -83,6 +83,28 @@ class UserController {
       });
     }
   }
+
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+    const { nome, email, senha } = request.body;
+
+    const userAlredyExists = await UserRepository.findById(id);
+
+    if (!userAlredyExists) {
+      return response.status(404).json({
+        error: 'User not found',
+      });
+    }
+
+    const resultQuery = await UserRepository.update(
+      id,
+      nome,
+      email,
+      senha ? criptografar(senha) : senha,
+    );
+    console.log(resultQuery);
+    return response.send(resultQuery);
+  }
 }
 
 export default new UserController();

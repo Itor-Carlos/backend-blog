@@ -32,8 +32,37 @@ class UserRepository {
     );
     return row;
   }
+
   async delete(id: string) {
     await query('DELETE FROM Users WHERE id = $1', [id]);
+  }
+
+  async update(id: string, name: string, email: string, senha: string) {
+    const updates = [];
+    const values = [];
+
+    if (name !== undefined) {
+      updates.push('nome = $1');
+      values.push(name);
+    }
+
+    if (email !== undefined) {
+      updates.push('email = $2');
+      values.push(email);
+    }
+
+    if (senha !== undefined) {
+      updates.push('senha = $3');
+      values.push(senha);
+    }
+
+    values.push(id);
+    const updateString = updates.join(', ');
+
+    const queryUpdate = `UPDATE Users SET ${updateString} WHERE id = $${values.length} RETURNING id, nome, email`;
+
+    const [row] = await query(queryUpdate, values);
+    return row;
   }
 }
 
