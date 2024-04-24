@@ -102,7 +102,6 @@ class UserController {
       email,
       senha ? criptografar(senha) : senha,
     );
-    console.log(resultQuery);
     return response.send(resultQuery);
   }
 }
