@@ -75,7 +75,7 @@ class UserController {
           error: 'User not found',
         });
       }
-
+      UserRepository.delete(id);
       response.sendStatus(200);
     } catch (error) {
       response.status(400).json({
