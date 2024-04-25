@@ -4,6 +4,7 @@ export type Post = {
   id: string;
   titulo: string;
   conteudo: string;
-  autor_id: User;
+  autor_id: string;
+  autor: User;
   data_criacao?: Date;
 };
