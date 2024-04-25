@@ -1,27 +1,22 @@
 import { Request, Response } from 'express';
 import UserRepository from '../repositories/UsersRepository';
 import { criptografar } from '../utils/criptografia';
+import { sendErrorRequest } from '../utils/errorsRequest';
 
 class UserController {
-  sendErrorRequest(response: Response, statusCode: number, field: string) {
-    return response.sendStatus(statusCode).json({
-      error: `${field} is a required field`,
-    });
-  }
-
   async store(request: Request, response: Response) {
     const { nome, email, senha } = request.body;
 
     if (!nome) {
-      this.sendErrorRequest(response, 400, 'nome');
+      sendErrorRequest(response, 400, 'nome');
     }
 
     if (!email) {
-      this.sendErrorRequest(response, 400, 'email');
+      sendErrorRequest(response, 400, 'email');
     }
 
     if (!senha) {
-      this.sendErrorRequest(response, 400, 'senha');
+      sendErrorRequest(response, 400, 'senha');
     }
 
     const userAlredyExists = await UserRepository.findByEmail(email);
