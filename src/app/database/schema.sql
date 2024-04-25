@@ -16,6 +16,6 @@ CREATE TABLE Posts (
     titulo VARCHAR(100) NOT NULL,
     conteudo TEXT NOT NULL,
     autor_id UUID NOT NULL,
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_criacao TIMESTAMP WITH TIME ZONE DEFAULT timezone('America/Sao_Paulo'::TEXT, CURRENT_TIMESTAMP),
     FOREIGN KEY (autor_id) REFERENCES Users(id)
 );
