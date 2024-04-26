@@ -37,6 +37,24 @@ class PostController {
     const returnSelect = await PostsRepository.listAll();
     return response.status(200).json(returnSelect);
   }
+
+  async show(request: Request, response: Response) {
+    try {
+      const { id } = request.params;
+      const resultaQuery = await PostsRepository.findById(id);
+
+      if (!resultaQuery) {
+        return response.status(400).json({
+          error: 'This Post do not exist',
+        });
+      }
+      response.send(resultaQuery);
+    } catch (error) {
+      response.status(400).json({
+        error: 'Used ID is not UUID type',
+      });
+    }
+  }
 }
 
 export default new PostController();

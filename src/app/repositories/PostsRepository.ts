@@ -13,6 +13,14 @@ class PostsRepository {
     const row = await query('SELECT id, titulo, conteudo FROM posts', []);
     return row;
   }
+
+  async findById(id: string) {
+    const [row] = await query(
+      'SELECT id, titulo, conteudo FROM posts WHERE id = $1',
+      [id],
+    );
+    return row;
+  }
 }
 
 export default new PostsRepository();

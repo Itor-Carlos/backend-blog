@@ -13,5 +13,6 @@ router.put('/user/:id', UserController.update);
 
 router.post('/post', PostController.store);
 router.get('/post', PostController.index);
+router.get('/post/:id', PostController.show);
 
 export default router;
