@@ -32,6 +32,11 @@ class PostController {
     );
     return response.status(200).json(postCreated);
   }
+
+  async show(request: Request, response: Response) {
+    const returnSelect = await PostsRepository.listAll();
+    return response.status(200).json(returnSelect);
+  }
 }
 
 export default new PostController();
