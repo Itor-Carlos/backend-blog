@@ -55,6 +55,18 @@ class PostController {
       });
     }
   }
+
+  async remove(request: Request, response: Response) {
+    try {
+      const { id } = request.params;
+      await PostsRepository.remove(id);
+      response.send(200);
+    } catch (error) {
+      response.status(400).json({
+        error: 'Used ID is not UUID type',
+      });
+    }
+  }
 }
 
 export default new PostController();

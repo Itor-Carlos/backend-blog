@@ -21,6 +21,10 @@ class PostsRepository {
     );
     return row;
   }
+
+  async remove(id: string) {
+    return await query('DELETE FROM Posts WHERE id = $1', [id]);
+  }
 }
 
 export default new PostsRepository();
