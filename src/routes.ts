@@ -15,5 +15,6 @@ router.post('/post', PostController.store);
 router.get('/post', PostController.index);
 router.get('/post/:id', PostController.show);
 router.delete('/post/:id', PostController.remove);
+router.put('/posts/:id', PostController.update);
 
 export default router;

@@ -67,6 +67,27 @@ class PostController {
       });
     }
   }
+
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+    const { titulo, conteudo, autor_id } = request.body;
+
+    const userAlredyExists = await PostsRepository.findById(id);
+
+    if (!userAlredyExists) {
+      return response.status(404).json({
+        error: 'Post not found',
+      });
+    }
+
+    const resultQuery = await PostsRepository.update(
+      id,
+      titulo,
+      conteudo,
+      autor_id,
+    );
+    return response.send(resultQuery);
+  }
 }
 
 export default new PostController();
