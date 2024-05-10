@@ -21,7 +21,7 @@ class PostController {
     }
 
     if (!emptyObjectRequest(errors)) {
-      return response.status(400).json(errors);
+      sendErrorRequest(response, 400, errors);
     }
 
     const autorExists = await UsersRepository.findById(autor_id);

@@ -16,7 +16,7 @@ class UserController {
     if (!senha) errors['senha'] = 'Senha is a required field';
 
     if (!emptyObjectRequest(errors)) {
-      return response.status(400).json(errors);
+      return sendErrorRequest(response, 400, errors);
     }
 
     const userAlredyExists = await UserRepository.findByEmail(email);

@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
+import { ObjectRequest } from '../models/ObjectRequest';
 
 export function sendErrorRequest(
   response: Response,
   statusCode: number,
-  field: string,
+  errors: ObjectRequest,
 ) {
-  return response.status(statusCode).json({
-    error: `${field} is a required field`,
-  });
+  return response.status(statusCode).json(errors);
 }
