@@ -1,4 +1,5 @@
 import query from '../database/index';
+import { criptografar } from '../utils/criptografia';
 
 class UserRepository {
   async create(nome: string, email: string, senha: string) {
@@ -7,7 +8,7 @@ class UserRepository {
     VALUES ($1, $2, $3)
     RETURNING id,nome,email
     `,
-      [nome, email, senha],
+      [nome, email, criptografar(senha)],
     );
     return row;
   }
@@ -53,7 +54,7 @@ class UserRepository {
 
     if (senha !== undefined) {
       updates.push('senha = $3');
-      values.push(senha);
+      values.push(criptografar(senha));
     }
 
     values.push(id);

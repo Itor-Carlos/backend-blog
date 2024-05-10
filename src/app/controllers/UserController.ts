@@ -27,11 +27,7 @@ class UserController {
       });
     }
 
-    const resultRequest = await UserRepository.create(
-      nome,
-      email,
-      criptografar(senha),
-    );
+    const resultRequest = await UserRepository.create(nome, email, senha);
     response.send(resultRequest);
   }
 
@@ -91,12 +87,7 @@ class UserController {
       });
     }
 
-    const resultQuery = await UserRepository.update(
-      id,
-      nome,
-      email,
-      senha ? criptografar(senha) : senha,
-    );
+    const resultQuery = await UserRepository.update(id, nome, email, senha);
     return response.send(resultQuery);
   }
 }
