@@ -2,19 +2,26 @@ import PostsRepository from '../repositories/PostsRepository';
 import { sendErrorRequest } from '../utils/errorsRequest';
 import { Request, Response } from 'express';
 import UsersRepository from '../repositories/UsersRepository';
+import { ObjectRequest, emptyObjectRequest } from '../models/ObjectRequest';
 
 class PostController {
   async store(request: Request, response: Response) {
     const { titulo, conteudo, autor_id } = request.body;
 
+    const errors: ObjectRequest = {};
+
     if (!titulo) {
-      sendErrorRequest(response, 400, 'titulo');
+      errors['titulo'] = 'Titulo is a required field';
     }
     if (!conteudo) {
-      sendErrorRequest(response, 400, 'conteudo');
+      errors['conteudo'] = 'Conteudo is a required field';
     }
     if (!autor_id) {
-      sendErrorRequest(response, 400, 'autor_id');
+      errors['autor_id'] = 'Autor_id is a required field';
+    }
+
+    if (!emptyObjectRequest(errors)) {
+      return response.status(400).json(errors);
     }
 
     const autorExists = await UsersRepository.findById(autor_id);
