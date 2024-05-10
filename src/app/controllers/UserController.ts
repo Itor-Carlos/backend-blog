@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import UserRepository from '../repositories/UsersRepository';
 import { criptografar } from '../utils/criptografia';
-import { sendErrorRequest } from '../utils/errorsRequest';
+import { sendErrorRequest } from '../utils/returnRequests';
 import { ObjectRequest } from '../models/ObjectRequest';
 import { emptyObjectRequest } from '../models/ObjectRequest';
 

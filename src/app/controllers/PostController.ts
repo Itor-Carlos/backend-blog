@@ -1,5 +1,5 @@
 import PostsRepository from '../repositories/PostsRepository';
-import { sendErrorRequest } from '../utils/errorsRequest';
+import { sendErrorRequest } from '../utils/returnRequests';
 import { Request, Response } from 'express';
 import UsersRepository from '../repositories/UsersRepository';
 import { ObjectRequest, emptyObjectRequest } from '../models/ObjectRequest';
