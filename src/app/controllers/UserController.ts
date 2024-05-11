@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import UserRepository from '../repositories/UsersRepository';
-import { sendErrorRequest } from '../utils/returnRequests';
+import { sendMessageRequest } from '../utils/returnRequests';
 import { ObjectRequest } from '../models/ObjectRequest';
 import { emptyObjectRequest } from '../models/ObjectRequest';
 
@@ -15,13 +15,13 @@ class UserController {
     if (!senha) errors['senha'] = 'Senha is a required field';
 
     if (!emptyObjectRequest(errors)) {
-      return sendErrorRequest(response, 400, errors);
+      return sendMessageRequest(response, 400, errors);
     }
 
     const userAlredyExists = await UserRepository.findByEmail(email);
 
     if (userAlredyExists) {
-      return response.status(400).json({
+      sendMessageRequest(response, 400, {
         error: 'This email has already been used',
       });
     }
@@ -36,14 +36,14 @@ class UserController {
       const resultRequest = await UserRepository.findById(id);
 
       if (!resultRequest) {
-        response.status(400).json({
+        sendMessageRequest(response, 400, {
           message: 'User not found',
         });
       }
 
       response.send(resultRequest);
     } catch (error) {
-      response.status(400).json({
+      sendMessageRequest(response, 400, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -61,14 +61,14 @@ class UserController {
       const userAlredyExists = await UserRepository.findById(id);
 
       if (!userAlredyExists) {
-        return response.status(404).json({
+        sendMessageRequest(response, 404, {
           error: 'User not found',
         });
       }
       UserRepository.delete(id);
       response.sendStatus(200);
     } catch (error) {
-      response.status(400).json({
+      sendMessageRequest(response, 400, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -81,7 +81,7 @@ class UserController {
     const userAlredyExists = await UserRepository.findById(id);
 
     if (!userAlredyExists) {
-      return response.status(404).json({
+      sendMessageRequest(response, 404, {
         error: 'User not found',
       });
     }

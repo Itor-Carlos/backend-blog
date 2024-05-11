@@ -1,5 +1,5 @@
 import PostsRepository from '../repositories/PostsRepository';
-import { sendErrorRequest } from '../utils/returnRequests';
+import { sendMessageRequest } from '../utils/returnRequests';
 import { Request, Response } from 'express';
 import UsersRepository from '../repositories/UsersRepository';
 import { ObjectRequest, emptyObjectRequest } from '../models/ObjectRequest';
@@ -21,17 +21,16 @@ class PostController {
     }
 
     if (!emptyObjectRequest(errors)) {
-      sendErrorRequest(response, 400, errors);
+      sendMessageRequest(response, 400, errors);
     }
 
     const autorExists = await UsersRepository.findById(autor_id);
 
     if (autorExists === undefined) {
-      return response.status(404).json({
+      sendMessageRequest(response, 400, {
         error: 'This autor do not exist',
       });
     }
-
     const postCreated = await PostsRepository.create(
       titulo,
       conteudo,
@@ -51,13 +50,11 @@ class PostController {
       const resultaQuery = await PostsRepository.findById(id);
 
       if (!resultaQuery) {
-        return response.status(400).json({
-          error: 'This Post do not exist',
-        });
+        sendMessageRequest(response, 400, { error: 'This Post do not exist' });
       }
       response.send(resultaQuery);
     } catch (error) {
-      response.status(400).json({
+      sendMessageRequest(response, 400, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -69,7 +66,7 @@ class PostController {
       await PostsRepository.remove(id);
       response.send(200);
     } catch (error) {
-      response.status(400).json({
+      sendMessageRequest(response, 404, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -82,7 +79,7 @@ class PostController {
     const userAlredyExists = await PostsRepository.findById(id);
 
     if (!userAlredyExists) {
-      return response.status(404).json({
+      sendMessageRequest(response, 404, {
         error: 'Post not found',
       });
     }

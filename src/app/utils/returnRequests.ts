@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { ObjectRequest } from '../models/ObjectRequest';
 
-export function sendErrorRequest(
+export function sendMessageRequest(
   response: Response,
   statusCode: number,
-  errors: ObjectRequest,
+  messages: ObjectRequest | Object,
 ) {
-  return response.status(statusCode).json(errors);
+  return response.status(statusCode).json(messages);
 }
