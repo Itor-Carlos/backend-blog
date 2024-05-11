@@ -87,7 +87,6 @@ class UserController {
     }
 
     const emailAlredyUsed = await UserRepository.findByEmail(email);
-    console.log(emailAlredyUsed);
 
     if (emailAlredyUsed) {
       sendMessageRequest(response, 404, {
