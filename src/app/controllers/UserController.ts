@@ -86,6 +86,15 @@ class UserController {
       });
     }
 
+    const emailAlredyUsed = await UserRepository.findByEmail(email);
+    console.log(emailAlredyUsed);
+
+    if (emailAlredyUsed) {
+      sendMessageRequest(response, 404, {
+        error: 'Email alredy taken',
+      });
+    }
+
     const resultQuery = await UserRepository.update(id, nome, email, senha);
     return response.send(resultQuery);
   }
