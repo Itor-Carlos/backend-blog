@@ -27,7 +27,7 @@ class PostController {
     const autorExists = await UsersRepository.findById(autor_id);
 
     if (autorExists === undefined) {
-      sendMessageRequest(response, 400, {
+      return sendMessageRequest(response, 400, {
         error: 'This autor do not exist',
       });
     }
@@ -50,11 +50,13 @@ class PostController {
       const resultaQuery = await PostsRepository.findById(id);
 
       if (!resultaQuery) {
-        sendMessageRequest(response, 400, { error: 'This Post do not exist' });
+        return sendMessageRequest(response, 400, {
+          error: 'This Post do not exist',
+        });
       }
       response.send(resultaQuery);
     } catch (error) {
-      sendMessageRequest(response, 400, {
+      return sendMessageRequest(response, 400, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -66,7 +68,7 @@ class PostController {
       await PostsRepository.remove(id);
       response.send(200);
     } catch (error) {
-      sendMessageRequest(response, 404, {
+      return sendMessageRequest(response, 404, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -79,7 +81,7 @@ class PostController {
     const userAlredyExists = await PostsRepository.findById(id);
 
     if (!userAlredyExists) {
-      sendMessageRequest(response, 404, {
+      return sendMessageRequest(response, 404, {
         error: 'Post not found',
       });
     }

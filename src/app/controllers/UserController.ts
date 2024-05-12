@@ -21,7 +21,7 @@ class UserController {
     const userAlredyExists = await UserRepository.findByEmail(email);
 
     if (userAlredyExists) {
-      sendMessageRequest(response, 400, {
+      return sendMessageRequest(response, 400, {
         error: 'This email has already been used',
       });
     }
@@ -36,14 +36,14 @@ class UserController {
       const resultRequest = await UserRepository.findById(id);
 
       if (!resultRequest) {
-        sendMessageRequest(response, 400, {
+        return sendMessageRequest(response, 400, {
           message: 'User not found',
         });
       }
 
       response.send(resultRequest);
     } catch (error) {
-      sendMessageRequest(response, 400, {
+      return sendMessageRequest(response, 400, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -61,14 +61,14 @@ class UserController {
       const userAlredyExists = await UserRepository.findById(id);
 
       if (!userAlredyExists) {
-        sendMessageRequest(response, 404, {
+        return sendMessageRequest(response, 404, {
           error: 'User not found',
         });
       }
       UserRepository.delete(id);
       response.sendStatus(200);
     } catch (error) {
-      sendMessageRequest(response, 400, {
+      return sendMessageRequest(response, 400, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -81,7 +81,7 @@ class UserController {
     const userAlredyExists = await UserRepository.findById(id);
 
     if (!userAlredyExists) {
-      sendMessageRequest(response, 404, {
+      return sendMessageRequest(response, 404, {
         error: 'User not found',
       });
     }
@@ -89,7 +89,7 @@ class UserController {
     const emailAlredyUsed = await UserRepository.findByEmail(email);
 
     if (emailAlredyUsed) {
-      sendMessageRequest(response, 404, {
+      return sendMessageRequest(response, 404, {
         error: 'Email alredy taken',
       });
     }
