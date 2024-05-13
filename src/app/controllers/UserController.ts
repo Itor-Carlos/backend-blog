@@ -4,6 +4,7 @@ import { sendMessageRequest } from '../utils/returnRequests';
 import { ObjectRequest } from '../models/ObjectRequest';
 import { emptyObjectRequest } from '../models/ObjectRequest';
 import { UserBody } from '../models/User';
+import { criptografar } from '../utils/criptografia';
 
 class UserController {
   async store(request: Request, response: Response) {
@@ -94,11 +95,10 @@ class UserController {
         error: 'Email alredy taken',
       });
     }
-
     const user: UserBody = {
       nome,
       email,
-      senha,
+      senha: criptografar(senha),
     };
 
     const resultQuery = await UserRepository.update(id, user);
