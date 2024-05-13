@@ -1,4 +1,5 @@
 import query from '../database/index';
+import { User, UserBody } from '../models/User';
 import { criptografar } from '../utils/criptografia';
 
 class UserRepository {
@@ -38,29 +39,28 @@ class UserRepository {
     await query('DELETE FROM Users WHERE id = $1', [id]);
   }
 
-  async update(id: string, name: string, email: string, senha: string) {
-    const updates = [];
-    const values = [];
+  async update(id: string, user: UserBody) {
+    const updates: string[] = [];
+    const values: string[] = [];
+    const returnList: string[] = [];
 
-    if (name !== undefined) {
-      updates.push('nome = $1');
-      values.push(name);
-    }
+    let contador = 0;
 
-    if (email !== undefined) {
-      updates.push('email = $2');
-      values.push(email);
-    }
-
-    if (senha !== undefined) {
-      updates.push('senha = $3');
-      values.push(criptografar(senha));
-    }
+    const keys = Object.entries(user);
+    keys.forEach((key) => {
+      if (key[1] !== undefined) {
+        updates.push(`${key[0]} = $${contador + 1}`);
+        values.push(key[1]);
+        returnList.push(key[0]);
+        contador++;
+      }
+    });
 
     values.push(id);
     const updateString = updates.join(', ');
+    const colunmsReturn = returnList.join(', ');
 
-    const queryUpdate = `UPDATE Users SET ${updateString} WHERE id = $${values.length} RETURNING id, nome, email`;
+    const queryUpdate = `UPDATE Users SET ${updateString} WHERE id = $${values.length} RETURNING id,${colunmsReturn}`;
 
     const [row] = await query(queryUpdate, values);
     return row;

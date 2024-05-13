@@ -5,3 +5,5 @@ export type User = {
   senha: string;
   data_criacao: Date;
 };
+
+export type UserBody = Omit<User, 'id' | 'data_criacao'>;

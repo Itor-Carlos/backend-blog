@@ -3,6 +3,7 @@ import UserRepository from '../repositories/UsersRepository';
 import { sendMessageRequest } from '../utils/returnRequests';
 import { ObjectRequest } from '../models/ObjectRequest';
 import { emptyObjectRequest } from '../models/ObjectRequest';
+import { UserBody } from '../models/User';
 
 class UserController {
   async store(request: Request, response: Response) {
@@ -94,7 +95,13 @@ class UserController {
       });
     }
 
-    const resultQuery = await UserRepository.update(id, nome, email, senha);
+    const user: UserBody = {
+      nome,
+      email,
+      senha,
+    };
+
+    const resultQuery = await UserRepository.update(id, user);
     return response.send(resultQuery);
   }
 }
