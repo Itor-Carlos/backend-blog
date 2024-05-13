@@ -7,10 +7,13 @@ const DADOS_CRIPTOGRAFAR = {
 };
 
 export function criptografar(senha: string) {
-  const cipher = crypto_module.createCipher(
-    DADOS_CRIPTOGRAFAR.algoritmo,
-    DADOS_CRIPTOGRAFAR.segredo,
-  );
-  cipher.update(senha);
-  return cipher.final(DADOS_CRIPTOGRAFAR.tipo);
+  if (senha !== undefined) {
+    const cipher = crypto_module.createCipher(
+      DADOS_CRIPTOGRAFAR.algoritmo,
+      DADOS_CRIPTOGRAFAR.segredo,
+    );
+    cipher.update(senha);
+    return cipher.final(DADOS_CRIPTOGRAFAR.tipo);
+  }
+  return undefined;
 }
