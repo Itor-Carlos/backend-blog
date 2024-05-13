@@ -8,3 +8,5 @@ export type Post = {
   autor: User;
   data_criacao?: Date;
 };
+
+export type PostBody = Omit<Post, 'id' | 'autor' | 'data_criacao'>;

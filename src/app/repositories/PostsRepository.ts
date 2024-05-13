@@ -1,4 +1,5 @@
 import query from '../database';
+import { PostBody } from '../models/Post';
 
 class PostsRepository {
   async create(titulo: string, conteudo: string, autor_id: string) {
@@ -26,29 +27,27 @@ class PostsRepository {
     return await query('DELETE FROM Posts WHERE id = $1', [id]);
   }
 
-  async update(id: string, titulo: string, conteudo: string, autor_id: string) {
-    const updates = [];
-    const values = [];
+  async update(id: string, postBody: PostBody) {
+    const updates: string[] = [];
+    const values: string[] = [];
+    const columnsReturn: string[] = [];
+    let contador = 0;
 
-    if (titulo !== undefined) {
-      updates.push('titulo = $1');
-      values.push(titulo);
-    }
+    const entries = Object.entries(postBody);
 
-    if (conteudo !== undefined) {
-      updates.push('conteudo = $2');
-      values.push(conteudo);
-    }
-
-    if (autor_id !== undefined) {
-      updates.push('autor_id = $3');
-      values.push(autor_id);
-    }
+    entries.forEach(([key, value]) => {
+      if (value !== undefined) {
+        updates.push(`${key} = $${contador + 1}`);
+        values.push(value);
+        columnsReturn.push(key);
+        contador++;
+      }
+    });
 
     values.push(id);
     const updateString = updates.join(', ');
 
-    const queryUpdate = `UPDATE Posts SET ${updateString} WHERE id = $${values.length} RETURNING id, titulo, conteudo, autor_id`;
+    const queryUpdate = `UPDATE Posts SET ${updateString} WHERE id = $${values.length} RETURNING id, ${columnsReturn.join(', ')}`;
 
     const [row] = await query(queryUpdate, values);
     return row;

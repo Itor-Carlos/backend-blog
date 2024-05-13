@@ -3,6 +3,7 @@ import { sendMessageRequest } from '../utils/returnRequests';
 import { Request, Response } from 'express';
 import UsersRepository from '../repositories/UsersRepository';
 import { ObjectRequest, emptyObjectRequest } from '../models/ObjectRequest';
+import { PostBody } from '../models/Post';
 
 class PostController {
   async store(request: Request, response: Response) {
@@ -86,12 +87,13 @@ class PostController {
       });
     }
 
-    const resultQuery = await PostsRepository.update(
-      id,
+    const postBody: PostBody = {
       titulo,
       conteudo,
       autor_id,
-    );
+    };
+
+    const resultQuery = await PostsRepository.update(id, postBody);
     return response.send(resultQuery);
   }
 }
