@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 import UsersRepository from '../repositories/UsersRepository';
 import { ObjectRequest, emptyObjectRequest } from '../models/ObjectRequest';
 import { PostBody } from '../models/Post';
+import { HttpStatusCodes } from '../constants/HttpStatus';
 
 class PostController {
   async store(request: Request, response: Response) {
@@ -22,13 +23,13 @@ class PostController {
     }
 
     if (!emptyObjectRequest(errors)) {
-      sendMessageRequest(response, 400, errors);
+      sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, errors);
     }
 
     const autorExists = await UsersRepository.findById(autor_id);
 
     if (autorExists === undefined) {
-      return sendMessageRequest(response, 400, {
+      return sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, {
         error: 'This autor do not exist',
       });
     }
@@ -51,13 +52,13 @@ class PostController {
       const resultaQuery = await PostsRepository.findById(id);
 
       if (!resultaQuery) {
-        return sendMessageRequest(response, 400, {
+        return sendMessageRequest(response, HttpStatusCodes.NOT_FOUND, {
           error: 'This Post do not exist',
         });
       }
       response.send(resultaQuery);
     } catch (error) {
-      return sendMessageRequest(response, 400, {
+      return sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -69,7 +70,7 @@ class PostController {
       await PostsRepository.remove(id);
       response.send(200);
     } catch (error) {
-      return sendMessageRequest(response, 404, {
+      return sendMessageRequest(response, HttpStatusCodes.NOT_FOUND, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -82,7 +83,7 @@ class PostController {
     const userAlredyExists = await PostsRepository.findById(id);
 
     if (!userAlredyExists) {
-      return sendMessageRequest(response, 404, {
+      return sendMessageRequest(response, HttpStatusCodes.NOT_FOUND, {
         error: 'Post not found',
       });
     }

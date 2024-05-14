@@ -5,6 +5,7 @@ import { ObjectRequest } from '../models/ObjectRequest';
 import { emptyObjectRequest } from '../models/ObjectRequest';
 import { UserBody } from '../models/User';
 import { criptografar } from '../utils/criptografia';
+import { HttpStatusCodes } from '../constants/HttpStatus';
 
 class UserController {
   async store(request: Request, response: Response) {
@@ -17,13 +18,13 @@ class UserController {
     if (!senha) errors['senha'] = 'Senha is a required field';
 
     if (!emptyObjectRequest(errors)) {
-      return sendMessageRequest(response, 400, errors);
+      return sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, errors);
     }
 
     const userAlredyExists = await UserRepository.findByEmail(email);
 
     if (userAlredyExists) {
-      return sendMessageRequest(response, 400, {
+      return sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, {
         error: 'This email has already been used',
       });
     }
@@ -38,14 +39,14 @@ class UserController {
       const resultRequest = await UserRepository.findById(id);
 
       if (!resultRequest) {
-        return sendMessageRequest(response, 400, {
+        return sendMessageRequest(response, HttpStatusCodes.NOT_FOUND, {
           message: 'User not found',
         });
       }
 
       response.send(resultRequest);
     } catch (error) {
-      return sendMessageRequest(response, 400, {
+      return sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -63,14 +64,14 @@ class UserController {
       const userAlredyExists = await UserRepository.findById(id);
 
       if (!userAlredyExists) {
-        return sendMessageRequest(response, 404, {
+        return sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, {
           error: 'User not found',
         });
       }
       UserRepository.delete(id);
       response.sendStatus(200);
     } catch (error) {
-      return sendMessageRequest(response, 400, {
+      return sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, {
         error: 'Used ID is not UUID type',
       });
     }
@@ -83,7 +84,7 @@ class UserController {
     const userAlredyExists = await UserRepository.findById(id);
 
     if (!userAlredyExists) {
-      return sendMessageRequest(response, 404, {
+      return sendMessageRequest(response, HttpStatusCodes.NOT_FOUND, {
         error: 'User not found',
       });
     }
@@ -91,7 +92,7 @@ class UserController {
     const emailAlredyUsed = await UserRepository.findByEmail(email);
 
     if (emailAlredyUsed) {
-      return sendMessageRequest(response, 404, {
+      return sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, {
         error: 'Email alredy taken',
       });
     }
