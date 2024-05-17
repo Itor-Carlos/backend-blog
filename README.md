@@ -6,6 +6,9 @@
 
 * Esse projeto tem como intuito simular o backend de uma aplicação de um blog onde podem ser cadastrados Usuários e Posts.
 
+### Tecnologias necessárias:
+ * Node.js
+ * Docker
 
 ### Etapas para rodar a aplicação:
 * 1°) Clone o projeto utilizando o comando:
