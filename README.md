@@ -14,6 +14,10 @@
   - ```sh
     git clone https://github.com/Itor-Carlos/desafio-blog.git
     ```
+* 2°) Rode o comando:
+  - ```sh
+      cd desafio-blog
+    ```
 * 2°) Utilize o comando `yarn` dentro da pasta que surgiu no passo anterior
 * 3°) Com o docker já instalado rode o comando seguinte para criar um container Postgres (caso já tenha, esse passo pode ser ignorado):
   - `docker-compose up -d`
