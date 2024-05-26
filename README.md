@@ -32,11 +32,41 @@
      docker exec -it pg bash
     ```
   - Sendo que o "pg" seria o nome do container anteriormente criado
-* 7°) Rode o comando `psql -U root` para logar no postgres
-* 8°) Copie todo o conteúdo do arquivo schema.sql dentro de src/app/database
-* 9°) Vá no arquivo index.ts no caminho src/app/database
-* 10°) Altere as informações de host, port, user, password (caso tenha feito passo o passo 3 exatamente como foi dito, esse passo atual pode ser ignorado)
-* 11°) Rode o comando:
+* 7°) Rode o comando:
+  - ```
+      psql -U root
+    ```
+  - O comando acima irá logar no postgres com o usuário "root"
+* 8°) Rode o comando abaixo:
+  - ```
+      CREATE DATABASE Challenge;
+    ```
+* 9°) Rode o comando abaixo:
+  - ```
+      \c challenge
+    ```
+* 10°) Rode o comando abaixo:
+  - ```
+      CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+      CREATE TABLE Users (
+          id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
+          nome VARCHAR(50) NOT NULL,
+          email VARCHAR(100) UNIQUE NOT NULL,
+          senha VARCHAR(100) NOT NULL,
+          data_criacao TIMESTAMP WITH TIME ZONE DEFAULT timezone('America/Sao_Paulo'::TEXT, CURRENT_TIMESTAMP),
+          ativo BOOLEAN DEFAULT true
+      );
+      CREATE TABLE Posts (
+          id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
+          titulo VARCHAR(100) NOT NULL,
+          conteudo TEXT NOT NULL,
+          autor_id UUID NOT NULL,
+          data_criacao TIMESTAMP WITH TIME ZONE DEFAULT timezone('America/Sao_Paulo'::TEXT, CURRENT_TIMESTAMP),
+          FOREIGN KEY (autor_id) REFERENCES Users(id)
+      );
+    ```
+* 11°) Vá no arquivo index.ts no caminho src/app/database
+* 12°) Rode o comando:
   - ```
      yarn start
     ```
