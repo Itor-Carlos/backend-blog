@@ -45,7 +45,7 @@
   - ```
       \c challenge
     ```
-* 10°) Rode o comando abaixo:
+* 10°) Rode o código SQL abaixo no terminal:
   - ```
       CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
       CREATE TABLE Users (
