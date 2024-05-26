@@ -22,3 +22,8 @@
 * 9°) Vá no arquivo index.ts no caminho src/app/database
 * 10°) Altere as informações de host, port, user, password (caso tenha feito passo o passo 3 exatamente como foi dito, esse passo atual pode ser ignorado)
 * 11°) Rode um `yarn start`
+
+### Próximas etapas:
+* [ ] Facilitar o start do projeto pela primeira vez.
+* [ ] Adicionar testes unitários
+* [ ] Mehorar retorno de erros
