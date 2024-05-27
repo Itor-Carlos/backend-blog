@@ -65,8 +65,7 @@
           FOREIGN KEY (autor_id) REFERENCES Users(id)
       );
     ```
-* 11°) Vá no arquivo index.ts no caminho src/app/database
-* 12°) Rode o comando:
+* 11°) Rode o comando:
   - ```
      yarn start
     ```
