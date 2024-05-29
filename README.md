@@ -73,4 +73,4 @@
 ### Próximas etapas:
 * [ ] Facilitar o start do projeto pela primeira vez.
 * [ ] Adicionar testes unitários
-* [ ] Mehorar retorno de erros
+* [ ] Melhorar retorno de erros
