@@ -74,3 +74,4 @@
 * [ ] Facilitar o start do projeto pela primeira vez.
 * [ ] Adicionar testes unitários
 * [ ] Melhorar retorno de erros
+* [ ] Colocar para ser selecionado qual tipo de BD na inicialização
