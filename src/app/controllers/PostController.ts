@@ -23,7 +23,7 @@ class PostController {
     }
 
     if (!emptyObjectRequest(errors)) {
-      sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, errors);
+      return sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, errors);
     }
 
     const autorExists = await UsersRepository.findById(autor_id);
