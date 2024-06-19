@@ -73,3 +73,4 @@
 ### Próximas etapas:
 * [ ] Facilitar o start do projeto pela primeira vez.
 * [ ] Adicionar testes unitários
+* [ ] Refatorar para utilizar ORM
