@@ -23,7 +23,7 @@ class UserRepository {
   }
 
   async listAll() {
-    const row = await query('SELECT id,nome,email FROM Users;', []);
+    const row = await query('SELECT id,nome,email, senha FROM Users;', []);
     return row;
   }
 

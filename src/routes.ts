@@ -10,6 +10,7 @@ router.get('/user/:id', UserController.show);
 router.post('/register', UserController.store);
 router.delete('/user/:id', UserController.remove);
 router.put('/user/:id', UserController.update);
+router.post('/login', UserController.login);
 
 router.post('/post', PostController.store);
 router.get('/post', PostController.index);

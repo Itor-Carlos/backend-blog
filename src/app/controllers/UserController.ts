@@ -8,6 +8,9 @@ import { criptografar } from '../utils/criptografia';
 import { HttpStatusCodes } from '../constants/HttpStatus';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import UserService from '../services/UserService';
+import { generateToken } from '../utils/generateToken';
+import { type } from 'os';
 
 dotenv.config();
 
@@ -34,13 +37,7 @@ class UserController {
     }
 
     const resultRequest = await UserRepository.create(nome, email, senha);
-    const token = jwt.sign(
-      { userId: resultRequest.id },
-      process.env.JWT_SECRET!,
-      {
-        expiresIn: process.env.JWT_EXPIRATION_TIME!,
-      },
-    );
+    const token = generateToken(resultRequest.id);
     response.send({
       token: token,
       user: resultRequest,
@@ -118,6 +115,28 @@ class UserController {
 
     const resultQuery = await UserRepository.update(id, user);
     return response.send(resultQuery);
+  }
+
+  async login(request: Request, response: Response) {
+    const { email, senha } = request.body;
+
+    const errors: ObjectRequest = {};
+
+    if (!email) errors['email'] = 'Email is a required field';
+    if (!senha) errors['senha'] = 'Senha is a required field';
+
+    if (!emptyObjectRequest(errors)) {
+      return sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, errors);
+    }
+
+    const user = await UserService.authenticateUser(email, senha);
+    if (user) {
+      const token = generateToken(user.id);
+      return response.send({
+        token: token,
+      });
+    }
+    return response.status(401).json({ message: 'Invalid credentials' });
   }
 }
 
