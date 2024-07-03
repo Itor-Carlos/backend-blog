@@ -6,6 +6,10 @@ import { emptyObjectRequest } from '../models/ObjectRequest';
 import { UserBody } from '../models/User';
 import { criptografar } from '../utils/criptografia';
 import { HttpStatusCodes } from '../constants/HttpStatus';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 class UserController {
   async store(request: Request, response: Response) {
@@ -30,7 +34,17 @@ class UserController {
     }
 
     const resultRequest = await UserRepository.create(nome, email, senha);
-    response.send(resultRequest);
+    const token = jwt.sign(
+      { userId: resultRequest.id },
+      process.env.JWT_SECRET!,
+      {
+        expiresIn: process.env.JWT_EXPIRATION_TIME!,
+      },
+    );
+    response.send({
+      token: token,
+      user: resultRequest,
+    });
   }
 
   async show(request: Request, response: Response) {
