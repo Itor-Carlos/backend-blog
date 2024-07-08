@@ -80,7 +80,7 @@ class UserController {
         });
       }
       UserRepository.delete(id);
-      response.sendStatus(200);
+      response.sendStatus(HttpStatusCodes.OK);
     } catch (error) {
       return sendMessageRequest(response, HttpStatusCodes.BAD_REQUEST, {
         error: 'Used ID is not UUID type',
@@ -136,7 +136,9 @@ class UserController {
         token: token,
       });
     }
-    return response.status(401).json({ message: 'Invalid credentials' });
+    return response
+      .status(HttpStatusCodes.BAD_REQUEST)
+      .json({ message: 'Invalid credentials' });
   }
 }
 
