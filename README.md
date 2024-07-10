@@ -75,3 +75,4 @@
 * [ ] Adicionar testes unitários
 * [ ] Refatorar para utilizar ORM
 * [ ] Adicionar testes de integração
+* [ ] Refatorar o projeto para estar no padrão SOLID
